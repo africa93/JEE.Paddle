@@ -34,7 +34,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(final String usernameOrEmailOrTokenValue) throws UsernameNotFoundException {
         User user = userDao.findByTokenValue(usernameOrEmailOrTokenValue);
         if (user != null) {
+        	System.out.println("-----------------------"+user.toString());
             List<Role> roleList = authorizationDao.findRoleByUser(user);
+            System.out.println(roleList.toString());
             return this.userBuilder(user.getUsername(), new BCryptPasswordEncoder().encode(""), roleList);
         } else {
             user = userDao.findByUsernameOrEmail(usernameOrEmailOrTokenValue);

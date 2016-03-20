@@ -21,6 +21,7 @@ public class CourtResourceFunctionalTesting {
 
     @Test
     public void testCreateCourt() {
+    	System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!TestCreateCourt");
         restService.createCourt("1");
     }
 

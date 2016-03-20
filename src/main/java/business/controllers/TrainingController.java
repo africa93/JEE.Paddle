@@ -1,0 +1,41 @@
+package business.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import business.wrapper.TrainingWrapper;
+import data.daos.CourtDao;
+import data.daos.TrainingDao;
+import data.daos.UserDao;
+import data.entities.Court;
+import data.entities.Training;
+import data.entities.User;
+
+@Controller
+public class TrainingController {
+	private UserDao userDao;
+	private CourtDao courtDao;
+	private TrainingDao	trainingDao;
+	
+	@Autowired
+    public void setCourtDao(CourtDao courtDao) {
+        this.courtDao = courtDao;
+    }
+
+    @Autowired
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+    
+    @Autowired
+    public void setTrainingDao(TrainingDao trainingDao) {
+        this.trainingDao = trainingDao;
+    }
+    public boolean createTraining(TrainingWrapper training){
+		Court court = courtDao.findOne(training.getCourt().getCourtId());
+		User trainer = userDao.findByUsernameOrEmail(training.getTrainer().getUsername());
+		Training trainingEntity = new Training(training.getStartDate(), training.getEndDate(), court, trainer);
+		boolean result = trainingDao.addTraining(trainingEntity);
+		return result;
+    }
+}
