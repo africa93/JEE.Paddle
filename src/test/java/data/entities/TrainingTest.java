@@ -10,13 +10,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import config.PersistenceConfig;
 import config.TestsPersistenceConfig;
+import data.daos.TrainingDao;
 import data.daos.UserDao;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, TestsPersistenceConfig.class})
 public class TrainingTest {
-	/*@Autowired
+	@Autowired
 	private TrainingDao trainingDao;
 	@Autowired
 	private UserDao userDao;
@@ -31,6 +32,6 @@ public class TrainingTest {
 	public void testIsPupil(){
 		assertTrue(trainingDao.findAll().get(0).isPupil(userDao.findAll().get(0)));
 		assertFalse(trainingDao.findAll().get(0).isPupil(userDao.findAll().get(1)));
-	}*/
+	}
 
 }
