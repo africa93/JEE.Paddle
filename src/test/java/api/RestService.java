@@ -30,5 +30,11 @@ public class RestService {
     public void createCourt(String id) {
         new RestBuilder<Object>(URL).path(Uris.COURTS).param("id", id).basicAuth(this.loginAdmin(), "").post().build();
     }
+    
+    public String loginTrainer(){
+    	TokenWrapper token = new RestBuilder<TokenWrapper>(URL).path(Uris.TOKENS).basicAuth("t0", "t0").clazz(TokenWrapper.class)
+                .post().build();
+        return token.getToken();
+    } 
 
 }
