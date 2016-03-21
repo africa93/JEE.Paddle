@@ -36,5 +36,4 @@ public class RestService {
                 .post().build();
         return token.getToken();
     } 
-
 }

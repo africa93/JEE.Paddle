@@ -36,7 +36,7 @@ public class ReserveDaoITest {
         Calendar date2 = (Calendar) date1.clone();
         date2.add(Calendar.HOUR_OF_DAY, 23);
         date2.add(Calendar.MINUTE, 59);
-        assertEquals(5, reserveDao.findByDateBetween(date1, date2).size());
+        assertEquals(4, reserveDao.findByDateBetween(date1, date2).size());
     }
 
     @Test

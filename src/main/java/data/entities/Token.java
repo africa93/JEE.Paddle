@@ -28,6 +28,11 @@ public class Token {
     @Column(nullable = false)
     private Calendar creationDate;
     
+    @Column(nullable = false)
+    private Long expirationDate;
+    
+    public static final int ESPIRED_TIME = 3600000;
+    
     public Token() {
     }
 
@@ -35,6 +40,7 @@ public class Token {
         assert user != null;
         this.user = user;
         this.creationDate = Calendar.getInstance();
+        this.expirationDate = System.currentTimeMillis() + Token.ESPIRED_TIME;
         this.value = new Encrypt().encryptInBase64UrlSafe("" + user.getId() + user.getUsername() + Long.toString(new Date().getTime())
                 + user.getPassword());
     }
@@ -76,16 +82,27 @@ public class Token {
 
     @Override
 	public String toString() {
-        String date = new SimpleDateFormat("dd-MMM-yyyy HH:mm").format(creationDate.getTime());
-		return "Token [id=" + id + ", value=" + value + ", userId=" + user.getId() + ", creationDate=" + date
+    	String strdate = new SimpleDateFormat("dd-MMM-yyyy HH:mm").format(creationDate.getTime());
+		return "Token [id=" + id + ", value=" + value + ", user=" + user + ", creationDate=" + strdate
 				+ "]";
 	}
-    public void setCreationDate(Calendar calendar) {
+
+    
+	public Long getExpirationDate() {
+		return expirationDate;
+	}
+
+	public void setExpirationDate(Long expirationDate) {
+		this.expirationDate = expirationDate;
+	}
+
+	public void setCreationDate(Calendar calendar) {
 		this.creationDate = calendar;
 	}
 
 	public boolean isValid() {
-		if (Calendar.getInstance().getTimeInMillis() - creationDate.getTimeInMillis() > 3600000) {
+		Long now = Calendar.getInstance().getTimeInMillis();
+		if (now < this.expirationDate && now > this.creationDate.getTimeInMillis()) {
 			return false;
 		}
 		return true;

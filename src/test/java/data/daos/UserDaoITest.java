@@ -55,8 +55,8 @@ public class UserDaoITest {
 	public void testFindByValidTokenValue(){
 		User u1 = (User) daosService.getMap().get("u1");
 		Token t1 = (Token) daosService.getMap().get("tu1");
-		assertEquals(u1, userDao.findByValidTokenValue(t1.getValue()));
-		assertNull(userDao.findByValidTokenValue("kk"));
+		assertEquals(u1, userDao.findByValidTokenValue(t1.getValue(),System.currentTimeMillis()));
+		assertNull(userDao.findByValidTokenValue("kk", System.currentTimeMillis()));
 	}
 
 	@Test 
@@ -65,8 +65,8 @@ public class UserDaoITest {
 		Token t = new Token(user);
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(2015, Calendar.AUGUST, 13);
-		t.setCreationDate(calendar);
+		t.setExpirationDate(calendar.getTimeInMillis());
 		tokenDao.save(t);
-		assertNull(userDao.findByValidTokenValue(t.getValue()));
+		assertNull(userDao.findByValidTokenValue(t.getValue(), System.currentTimeMillis()));
 	}
 }

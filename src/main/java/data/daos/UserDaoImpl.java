@@ -13,7 +13,7 @@ public class UserDaoImpl implements UserExtended{
 	@Autowired 
 	private UserDao userDao;
 
-	@Override
+	/*@Override
 	public User findByValidTokenValue(String usernameOrEmailOrTokenValue) {
 		User user = userDao.findByTokenValue(usernameOrEmailOrTokenValue);
 		if(user != null){
@@ -25,6 +25,6 @@ public class UserDaoImpl implements UserExtended{
 			}
 		}
 		return null;
-	}
+	}*/
 
 }
