@@ -31,11 +31,12 @@ public class TrainingController {
     public void setTrainingDao(TrainingDao trainingDao) {
         this.trainingDao = trainingDao;
     }
-    public boolean createTraining(TrainingWrapper training){
-		Court court = courtDao.findOne(training.getCourt().getCourtId());
-		User trainer = userDao.findByUsernameOrEmail(training.getTrainer().getUsername());
-		Training trainingEntity = new Training(training.getStartDate(), training.getEndDate(), court, trainer);
-		boolean result = trainingDao.addTraining(trainingEntity);
-		return result;
+    public boolean createTraining(TrainingWrapper trainingWrapper){
+		Training training = new Training();
+		training.setStartDate(trainingWrapper.getStartDate());
+		training.setEndDate(trainingWrapper.getEndDate());
+		training.setCourt(courtDao.findOne(trainingWrapper.getCourt().getCourtId()));
+		training.setUser(userDao.findByUsernameOrEmail(trainingWrapper.getTrainer().getUsername()));
+		return trainingDao.addTraining(training);
     }
 }
