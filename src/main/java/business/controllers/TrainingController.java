@@ -7,10 +7,7 @@ import business.wrapper.TrainingWrapper;
 import data.daos.CourtDao;
 import data.daos.TrainingDao;
 import data.daos.UserDao;
-import data.entities.Court;
 import data.entities.Training;
-import data.entities.User;
-
 @Controller
 public class TrainingController {
 	private UserDao userDao;
