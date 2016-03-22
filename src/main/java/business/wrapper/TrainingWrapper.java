@@ -23,8 +23,8 @@ public class TrainingWrapper {
 	public TrainingWrapper(Training training){
 		this.startDate = training.getStartDate();
 		this.endDate = training.getEndDate();
-		this.court = new CourtState(court.getCourtId(), true);
-		this.trainer = new UserWrapper(trainer.getUsername(),trainer.getEmail(), trainer.getPassword(), trainer.getBirthDate());
+		this.court = new CourtState(training.getCourt().getId(), training.getCourt().isActive());
+		this.trainer = new UserWrapper(training.getTrainer().getUsername(),training.getTrainer().getEmail(), training.getTrainer().getPassword(), training.getTrainer().getBirthDate());
 	}
 	public Calendar getStartDate() {
 		return startDate;
