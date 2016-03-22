@@ -40,7 +40,6 @@ public class TrainingDaoImpl implements TrainingExtended {
 		if(training != null){
 			result = training.addPupil(pupil);
 			trainingDao.save(training);
-			System.out.println(result + training.toString());
 		}
 		return result;
 	}

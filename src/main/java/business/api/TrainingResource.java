@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
+
+import business.api.exceptions.AlreadyExistsTrainingException;
+import business.api.exceptions.NotFoundTrainingIdException;
 import business.controllers.TrainingController;
 import business.wrapper.TrainingWrapper;
 
@@ -27,8 +30,11 @@ public class TrainingResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void createTraining(@AuthenticationPrincipal User trainer, @RequestBody TrainingWrapper trainingWrapper){
-		trainingController.createTraining(trainingWrapper);
+	public void createTraining(@AuthenticationPrincipal User trainer, @RequestBody TrainingWrapper trainingWrapper)
+		throws AlreadyExistsTrainingException{
+		if(!trainingController.createTraining(trainingWrapper)){
+			throw new AlreadyExistsTrainingException();
+		}
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
@@ -37,17 +43,26 @@ public class TrainingResource {
 	}
 	
 	@RequestMapping(value= Uris.REGISTER_TRAINING + Uris.ID, method = RequestMethod.POST)
-	public void registerTraining(@AuthenticationPrincipal User trainer, @PathVariable int trainingID, @RequestBody String pupilUsername){
-		trainingController.registerTraining(trainingID,pupilUsername);
+	public void registerTraining(@AuthenticationPrincipal User trainer, @PathVariable int trainingID, @RequestBody String pupilUsername)
+		throws NotFoundTrainingIdException{
+		if(!trainingController.registerTraining(trainingID,pupilUsername)){
+			throw new NotFoundTrainingIdException();
+		}
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
-	public void deleteTraining(@AuthenticationPrincipal User trainer, @RequestParam(required = true) String trainingID){
-		trainingController.deleteTraining(Integer.parseInt(trainingID));
+	public void deleteTraining(@AuthenticationPrincipal User trainer, @RequestParam(required = true) String trainingID)
+			throws NotFoundTrainingIdException{
+		if(trainingController.deleteTraining(Integer.parseInt(trainingID))){
+			throw new NotFoundTrainingIdException();
+		}
 	}
 	
 	@RequestMapping(value = Uris.DELETE_TRAINING_PLAYER + Uris.ID, method = RequestMethod.POST)
-	public void deleteTrainingPlayer(@AuthenticationPrincipal User trainer, @PathVariable int trainingID, @RequestBody String pupilUsername){
-		trainingController.deleteTrainingPlayer(trainingID, pupilUsername);
+	public void deleteTrainingPlayer(@AuthenticationPrincipal User trainer, @PathVariable int trainingID, @RequestBody String pupilUsername)
+			throws NotFoundTrainingIdException{
+		if(trainingController.deleteTrainingPlayer(trainingID, pupilUsername)){
+			throw new NotFoundTrainingIdException();
+		}
 	}
 }
