@@ -49,9 +49,11 @@ public class TrainingDaoImpl implements TrainingExtended {
 	public boolean deletePupilFromTraining(int idTraining, User pupil) {
 		Training training = trainingDao.findById(idTraining);
 		if(training != null){
-			training.removePupil(pupil);
-			trainingDao.save(training);
-			return true;
+			if(training.isPupil(pupil)){
+				training.removePupil(pupil);
+				trainingDao.save(training);
+				return true;
+			}
 		}
 		return false;
 	}

@@ -21,5 +21,9 @@ public class Uris {
     public static final String TRAININGS = "/trainings";
     
     public static final String AVAILABILITY = "/availability";
+    
+    public static final String REGISTER_TRAINING = "/register-training";
+
+	public static final String DELETE_TRAINING_PLAYER = "/delete-training-player";
 
 }

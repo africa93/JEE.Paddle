@@ -3,6 +3,8 @@ package business.wrapper;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import data.entities.Training;
+
 public class TrainingWrapper {
 	private Calendar startDate;
 	private Calendar endDate;
@@ -10,11 +12,19 @@ public class TrainingWrapper {
 	private UserWrapper trainer;
 	
 	public TrainingWrapper() {}
+	
 	public TrainingWrapper(Calendar startDate, Calendar endDate, CourtState court, UserWrapper trainer) {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.court = court;
 		this.trainer = trainer;
+	}
+	
+	public TrainingWrapper(Training training){
+		this.startDate = training.getStartDate();
+		this.endDate = training.getEndDate();
+		this.court = new CourtState(court.getCourtId(), true);
+		this.trainer = new UserWrapper(trainer.getUsername(),trainer.getEmail(), trainer.getPassword(), trainer.getBirthDate());
 	}
 	public Calendar getStartDate() {
 		return startDate;
