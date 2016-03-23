@@ -30,7 +30,7 @@ public class TrainingResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void createTraining(@AuthenticationPrincipal User trainer, @RequestBody TrainingWrapper trainingWrapper)
+	public void createTraining(@RequestBody TrainingWrapper trainingWrapper)
 		throws AlreadyExistsTrainingException{
 		if(!trainingController.createTraining(trainingWrapper)){
 			throw new AlreadyExistsTrainingException();
@@ -43,7 +43,7 @@ public class TrainingResource {
 	}
 	
 	@RequestMapping(value= Uris.REGISTER_TRAINING + Uris.ID, method = RequestMethod.POST)
-	public void registerTraining(@AuthenticationPrincipal User trainer, @PathVariable int trainingID, @RequestBody String pupilUsername)
+	public void registerTraining(@PathVariable int trainingID, @RequestBody String pupilUsername)
 		throws NotFoundTrainingIdException{
 		if(!trainingController.registerTraining(trainingID,pupilUsername)){
 			throw new NotFoundTrainingIdException();
@@ -51,7 +51,7 @@ public class TrainingResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
-	public void deleteTraining(@AuthenticationPrincipal User trainer, @RequestParam(required = true) String trainingID)
+	public void deleteTraining(@RequestParam(required = true) String trainingID)
 			throws NotFoundTrainingIdException{
 		if(trainingController.deleteTraining(Integer.parseInt(trainingID))){
 			throw new NotFoundTrainingIdException();
@@ -59,7 +59,7 @@ public class TrainingResource {
 	}
 	
 	@RequestMapping(value = Uris.DELETE_TRAINING_PLAYER + Uris.ID, method = RequestMethod.POST)
-	public void deleteTrainingPlayer(@AuthenticationPrincipal User trainer, @PathVariable int trainingID, @RequestBody String pupilUsername)
+	public void deleteTrainingPlayer(@PathVariable int trainingID, @RequestBody String pupilUsername)
 			throws NotFoundTrainingIdException{
 		if(trainingController.deleteTrainingPlayer(trainingID, pupilUsername)){
 			throw new NotFoundTrainingIdException();

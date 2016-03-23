@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,18 +44,28 @@ public class TrainingResourceFunctionalITesting {
 	@Autowired 
 	private TrainingDao trainingDao;
 	
+	private TrainingWrapper trainingW;
+	
+	@Before
+	public void init(){
+		trainingDao.deleteAll();
+		Calendar startDate = new GregorianCalendar(2016, Calendar.FEBRUARY, 4, 11, 00, 00);
+		Calendar endDate = new GregorianCalendar(2016, Calendar.MAY, 4, 11, 00, 00);
+		CourtState court = new CourtState(courtDao.findAll().get(1).getId(),true);
+		User user = userDao.findByUsernameOrEmail("t0");
+		UserWrapper trainer = new UserWrapper(user.getUsername(), user.getEmail(), user.getPassword(), user.getBirthDate());
+		this.trainingW = new  TrainingWrapper(startDate, endDate, court, trainer);
+	}
 	@Test
 	public void testCreateTraining(){
-		String token = restService.loginAdmin();
+		System.out.println("Empiezo");
+		String token = restService.registerAndLoginPlayer();
 		User user = userDao.findByTokenValue(token);
-		UserWrapper trainer = new UserWrapper(user.getUsername(), user.getEmail(), user.getPassword(), user.getBirthDate());
-		CourtState court = new CourtState(courtDao.findOne(1));
-		Calendar startDate = new GregorianCalendar(2016, Calendar.JUNE, 1, 15, 00, 00);
-		Calendar endDate = new GregorianCalendar(2016, Calendar.AUGUST, 31, 15, 00, 00);
-		TrainingWrapper training = new TrainingWrapper(startDate, endDate, court, trainer);
-		new RestBuilder<Object>(RestService.URL).path(Uris.TRAININGS).basicAuth(token, "")
-        .body(training).post().build();
-		assertEquals(1, trainingDao.count());
+		System.out.println(user.toString());
+		//UserWrapper trainer = new UserWrapper(user.getUsername(), user.getEmail(), user.getPassword(), user.getBirthDate());
+		//trainingW.setTrainer(trainer);
+		//new RestBuilder<Object>(RestService.URL).path(Uris.TRAININGS).body(trainingW).post().build();
+		//assertEquals(1, trainingDao.count());
 	}
 	
 	@Test 
