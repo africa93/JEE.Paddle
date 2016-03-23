@@ -13,8 +13,13 @@ import business.wrapper.CourtState;
 public class CourtPresenter {
 	@Autowired
 	private CourtController courtController;
-	
+
 	public CourtPresenter(){}
+
+	@RequestMapping("/home")
+	public String home(Model model) {
+		return "/home";
+	}
 
 	@RequestMapping("/list-courts")
 	public String listCourts(Model model){
@@ -40,10 +45,10 @@ public class CourtPresenter {
 	}
 
 	@RequestMapping(value = "/create-court", method = RequestMethod.POST)
-    public String createCourtSubmit(@ModelAttribute(value="court") CourtState court, Model model){
+	public String createCourtSubmit(@ModelAttribute(value="court") CourtState court, Model model){
 		courtController.createCourt(court.getCourtId());
-		System.out.println("!!!!!!!!!!!!!!!! se crea pista" + court.getCourtId());
-		return this.createCourt(model);
-		
-    }
+		this.createCourt(model);
+		return "/createCourtSuccess";
+
+	}
 }

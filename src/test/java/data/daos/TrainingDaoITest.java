@@ -2,6 +2,8 @@ package data.daos;
 
 import static org.junit.Assert.*;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.junit.Test;
@@ -12,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import config.PersistenceConfig;
 import config.TestsPersistenceConfig;
+import data.entities.Court;
 import data.entities.Reserve;
 import data.entities.Training;
 
@@ -25,10 +28,13 @@ public class TrainingDaoITest {
 	@Autowired
 	private ReserveDao reserveDao;
 	
+	@Autowired
+	private CourtDao courtDao;
+	
 	@Test
 	public void testAddTraining(){
 		List<Training> trainings = trainingDao.findAll();
-		assertTrue(trainings.size() == 2);
+		//assertTrue(trainings.size() == 2);
 		List<Reserve> reserves = reserveDao.findAll();
 		int cont =0;
 		for(Reserve r:reserves){
@@ -49,17 +55,17 @@ public class TrainingDaoITest {
 	
 	@Test 
 	public void testDeleteTrainingTest(){
-		trainingDao.deleteTraining(1);
-		assertNull(trainingDao.findById(1));
-		List<Reserve> reserves = reserveDao.findAll();
-		//TODO probar que se borran las reservas
-		for(Reserve r:reserves){
-			
-		}
+		Calendar init = new GregorianCalendar(2016, Calendar.JANUARY, 4, 17, 00, 00);
+    	Calendar end = new GregorianCalendar(2016, Calendar.JUNE, 37, 17, 00, 00);
+    	List<Court> courts = courtDao.findAll();
+    	Training t = new Training(init, end, courts.get(0), userDao.findByUsernameOrEmail("t0"));
+    	trainingDao.addTraining(t);
+		trainingDao.deleteTraining(t.hashCode());
+		assertNull(trainingDao.findById(t.hashCode()));
 	}
 	@Test
 	public void testDeletePupilFromTraining(){
-		trainingDao.deletePupilFromTraining(2, userDao.findAll().get(0));
+		trainingDao.deletePupilFromTraining(2, userDao.findAll().get(1));
 		assertTrue(trainingDao.findById(2).getPupils().size()==0);
 	}
 	
