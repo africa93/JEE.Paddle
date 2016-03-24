@@ -1,3 +1,7 @@
+# JEE.ECP1
+
+Las ampliaciones realizadas se resumen en la [wiki] (https://github.com/africa93/JEE.Paddle/wiki)
+
 # Tecnología Spring: Proyecto Padel
 #### Back-end con Tecnologías de Código Abierto (SPRING)
 #### [Máster en Ingeniería Web por la U.P.M.](http://miw.etsisi.upm.es)
@@ -29,4 +33,5 @@
 ![Casos de uso](/docs/Paddle.Daos.png "Casos de Uso")
 
 ###### Autor: Jesús Bernal Bermúdez U.P.M.
+
 
