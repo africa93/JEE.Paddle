@@ -34,12 +34,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests()//
                 .antMatchers(Uris.SERVLET_MAP + Uris.TOKENS + "/**").authenticated()//
                 .antMatchers(Uris.SERVLET_MAP + Uris.COURTS + "/**").hasRole(Role.ADMIN.name())//
-                //.antMatchers(HttpMethod.POST, Uris.SERVLET_MAP + Uris.RESERVES + "/**").hasRole(Role.PLAYER.name())//
-                //.antMatchers(HttpMethod.POST, Uris.SERVLET_MAP + Uris.TRAININGS).hasRole(Role.TRAINER.name())
-                //.antMatchers(HttpMethod.DELETE, Uris.SERVLET_MAP + Uris.TRAININGS).hasRole(Role.TRAINER.name())
-                //.antMatchers(Uris.SERVLET_MAP + Uris.TRAININGS + Uris.REGISTER_TRAINING + Uris.ID).hasAnyRole(Role.PLAYER.name())
-                //.antMatchers(Uris.SERVLET_MAP + Uris.TRAININGS + Uris.DELETE_TRAINING_PLAYER + Uris.ID).hasAnyRole(Role.PLAYER.name())
-                //.antMatchers(HttpMethod.GET, Uris.SERVLET_MAP + Uris.TRAININGS).hasAnyRole(Role.PLAYER.name())
+                .antMatchers(HttpMethod.POST, Uris.SERVLET_MAP + Uris.RESERVES + "/**").hasRole(Role.PLAYER.name())//
+                .antMatchers(HttpMethod.POST, Uris.SERVLET_MAP + Uris.TRAININGS).hasRole(Role.TRAINER.name())
+                .antMatchers(HttpMethod.DELETE, Uris.SERVLET_MAP + Uris.TRAININGS).hasRole(Role.TRAINER.name())
+                .antMatchers(Uris.SERVLET_MAP + Uris.TRAININGS + Uris.REGISTER_TRAINING + Uris.ID).hasAnyRole(Role.PLAYER.name())
+                .antMatchers(Uris.SERVLET_MAP + Uris.TRAININGS + Uris.DELETE_TRAINING_PLAYER + Uris.ID).hasAnyRole(Role.PLAYER.name())
+                .antMatchers(HttpMethod.GET, Uris.SERVLET_MAP + Uris.TRAININGS).hasAnyRole(Role.PLAYER.name())
                 .and().httpBasic();//
     }
 

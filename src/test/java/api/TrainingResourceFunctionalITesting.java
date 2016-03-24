@@ -8,7 +8,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +21,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import business.api.Uris;
-import business.wrapper.AvailableTime;
 import business.wrapper.CourtState;
 import business.wrapper.TrainingWrapper;
 import business.wrapper.UserWrapper;
@@ -58,25 +56,17 @@ public class TrainingResourceFunctionalITesting {
 	}
 	@Test
 	public void testCreateTraining(){
-		System.out.println("Empiezo");
-		String token = restService.registerAndLoginPlayer();
-		User user = userDao.findByTokenValue(token);
-		System.out.println(user.toString());
-		//UserWrapper trainer = new UserWrapper(user.getUsername(), user.getEmail(), user.getPassword(), user.getBirthDate());
-		//trainingW.setTrainer(trainer);
-		//new RestBuilder<Object>(RestService.URL).path(Uris.TRAININGS).body(trainingW).post().build();
-		//assertEquals(1, trainingDao.count());
+		String token = restService.loginTrainer();
+		new RestBuilder<Object>(RestService.URL).path(Uris.TRAININGS).basicAuth(token, "").body(trainingW).post().build();
+		assertEquals(1, trainingDao.findAll().size());
 	}
 	
 	@Test 
 	public void testShowTrainings(){
-		/*String token = restService.registerAndLoginPlayer();
-        String trainings = new RestBuilder<String>(RestService.URL).path(Uris.TRAININGS).basicAuth(token, "").get().build();
-        LogManager.getLogger(this.getClass()).info("testshowAvailability (" + trainings + ")");
-	*/
 		URI uri = UriComponentsBuilder.fromHttpUrl(RestService.URL).path(Uris.TRAININGS).build().encode().toUri();
 		RequestEntity<Object> requestEntity = new RequestEntity<>(HttpMethod.GET, uri);
 		List<TrainingWrapper> response = Arrays.asList(new RestTemplate().exchange(requestEntity, TrainingWrapper[].class).getBody());
+		assertEquals(3, response.size());
 		System.out.println(response);
 	}
 	@After

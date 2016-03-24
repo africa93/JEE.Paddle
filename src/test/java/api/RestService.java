@@ -33,7 +33,7 @@ public class RestService {
     
     public String loginTrainer(){
     	TokenWrapper token = new RestBuilder<TokenWrapper>(URL).path(Uris.TOKENS).basicAuth("t0", "t0").clazz(TokenWrapper.class)
-                .post().build();
+    			.post().build();
         return token.getToken();
     } 
 }

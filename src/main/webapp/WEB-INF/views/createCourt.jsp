@@ -4,6 +4,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<link href="<c:url value='/static/css/bootstrap.css' />"
+	rel="stylesheet">
+<link href="<c:url value='/static/css/jumbotron.css' />"
+	rel="stylesheet">
 <title>Crear pista</title>
 </head>
 <body>
@@ -14,8 +21,9 @@
 				data-toggle="collapse" data-target="#navbar" aria-expanded="false"
 				aria-controls="navbar">
 				<span class="icon-bar"></span><span class="icon-bar"></span> <span
-					class="icon-bar"></span>Paddle
+					class="icon-bar"></span>
 			</button>
+			<a class="navbar-brand" href="#">Paddle</a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
@@ -29,7 +37,7 @@
 	</nav>
 	<form:form action="create-court" modelAttribute="court">
 		<form:hidden path="courtId" />
-		<input type="submit" value="Crear pista">
+		<input type="submit" value="Crear pista" class="btn btn-secondary">
 	</form:form>
 </body>
 </html>

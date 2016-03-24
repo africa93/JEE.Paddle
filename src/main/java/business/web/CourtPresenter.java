@@ -20,6 +20,11 @@ public class CourtPresenter {
 	public String home(Model model) {
 		return "/home";
 	}
+	
+	@RequestMapping("/createCourtSuccess")
+	public String createCourtSuccess(Model model) {
+		return "/createCourtSuccess";
+	}
 
 	@RequestMapping("/list-courts")
 	public String listCourts(Model model){
